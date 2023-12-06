@@ -1,9 +1,11 @@
+using System.Text;
 using api;
 using api.Middleware;
-using infrastructure;
 using infrastructure.Repositories;
+using Microsoft.IdentityModel.Tokens;
 using service;
 using service.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using EmailService = service.Services.EmailService;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,8 +47,27 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 var frontEndRelativePath = "./../frontend/www";
 builder.Services.AddSpaStaticFiles(conf => conf.RootPath = frontEndRelativePath);
+//For JWT
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer"),
+        ValidAudience = builder.Configuration.GetValue<string>("Jwt:Audience"),
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Jwt:Key")))
+    };
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
