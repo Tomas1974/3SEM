@@ -1,16 +1,11 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import {environment} from "../../environments/environment";
 
 export interface User {
-    user_id: number;
+    id: number;
     full_name: string;
     email: string;
-
-    admin: string;
-
-    Admin: string;
-
+    isAdmin: boolean;
 }
 
 export interface Credentials {
@@ -20,6 +15,8 @@ export interface Credentials {
 
 export interface Registration {
     full_name: string;
+    street: string;
+    zip: number;
     email: string;
     password: string;
 }
@@ -31,12 +28,13 @@ export class ResponseDto<T> {
 
 @Injectable()
 export class AccountService {
-  constructor(private readonly http: HttpClient) {
-  }
+    constructor(private readonly http: HttpClient) { }
 
-  getCurrentUser() {
-    return this.http.get<User>('/api/get');
-  }
+    getCurrentUser() {
+        return this.http.get<User>('/api/account/getinfo');
+    }
 
-
+    login(value: Credentials) {
+        return this.http.post<{ token: string }>('/api/account/login', value);
+    }
 }

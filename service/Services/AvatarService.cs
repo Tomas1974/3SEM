@@ -6,7 +6,7 @@ namespace service.Services;
 
 public class AvatarService
 {
-   private readonly AvatarRepository _avatarRepository;
+    private readonly AvatarRepository _avatarRepository;
     
     public AvatarService(AvatarRepository avatarRepository)
     {
@@ -14,7 +14,7 @@ public class AvatarService
     }
     
     
-    public IEnumerable<AvatarModel> GetAllAvatars()
+    public IEnumerable<Avatar> GetAllAvatars()
     {
         try
         {
@@ -31,10 +31,10 @@ public class AvatarService
     }
     
     
-    public AvatarModel CreateAvatar(AvatarModel avatar)
+    public Avatar CreateAvatar(Avatar avatar)
     {
 
-        if (!ReferenceEquals(_avatarRepository.CheckIfNameExist(avatar.AvatarName), null))
+        if (!ReferenceEquals(_avatarRepository.CheckIfNameExist(avatar.avatar_name), null))
             throw new ValidationException("Already exists");
         
         try
@@ -50,12 +50,12 @@ public class AvatarService
         
     
     
-    public AvatarModel UpdateAvatar(int avatarId, AvatarModel avatar)
+    public Avatar UpdateAvatar(int avatar_id, Avatar avatar)
     {
       
         try
         {
-            return _avatarRepository.UpdateAvatar(avatarId,avatar);
+            return _avatarRepository.UpdateAvatar(avatar_id,avatar);
         }
         catch (Exception e)
         {

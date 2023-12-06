@@ -12,7 +12,7 @@ public class SearchService
         _searchRepository = searchRepository;
     }
 
-    public IEnumerable<AvatarModel> SearchAvatar(string searchQuery)
+    public IEnumerable<Avatar> SearchAvatar(string searchQuery)
     {
         return _searchRepository.SearchAvatar(searchQuery);
     }

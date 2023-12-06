@@ -8,10 +8,13 @@ namespace service.Services;
 public class EmailService
 {
     
-    private readonly EmailRepository _emailRespository;
+    private readonly EmailRespository _emailRespository;
  
-      
-    public EmailService(EmailRepository emailRespository)
+    
+    
+    
+
+    public EmailService(EmailRespository emailRespository)
     {
         _emailRespository = emailRespository;
     }
@@ -24,7 +27,7 @@ public class EmailService
      MimeMessage message = new MimeMessage();
      BodyBuilder builder = new BodyBuilder ();
         
-      UserModel user = _emailRespository.GetOrdersUser(order_id);
+      User user = _emailRespository.GetOrdersUser(order_id);
          
         makeEmailHeader(order_id, user, message);
         makeEmailBody(order_id, user, builder);
@@ -34,27 +37,27 @@ public class EmailService
     }
 
 
-    void makeEmailHeader(int order_id,UserModel user,MimeMessage message)
+    void makeEmailHeader(int order_id,User user,MimeMessage message)
     {
         
         
         message.From.Add(new MailboxAddress("The Webshop Inc. order no: " + order_id, Environment.GetEnvironmentVariable("fromemail")));
-        message.To.Add(new MailboxAddress("Customer", user.Mail));
+        message.To.Add(new MailboxAddress("Customer", user.Email));
         message.Subject = "Your order confirmation";
 
     }
     
     
-    public void makeEmailBody(int order_id, UserModel user,BodyBuilder builder)
+    public void makeEmailBody(int order_id, User user,BodyBuilder builder)
     {
         string emailBody=""; 
 
-        foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(order_id))
-            emailBody = emailBody + avatar.AvatarName+"\n";
+        foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(order_id))
+            emailBody = emailBody + avatar.avatar_name+"\n";
 
 
         
-            builder.TextBody = " Hello " + user.Name + "\n" + "\n" +
+            builder.TextBody = " Hello " + user.full_name + "\n" + "\n" +
                                "Thanks for your order no: "+order_id +" including the following items: " + "\n" + "\n"
                                + emailBody + "\n" +
                                "Your items is attached to this email." + "\n" + "\n" +
@@ -67,9 +70,9 @@ public class EmailService
     {
         WebClient webClient = new WebClient();
 
-        foreach (AvatarModel avatar in _emailRespository.GetOrdersAvatars(order_id))
+        foreach (Avatar avatar in _emailRespository.GetOrdersAvatars(order_id))
         {
-            string fileName = avatar.AvatarName + ".png";
+            string fileName = avatar.avatar_name + ".png";
             webClient.DownloadFile("https://robohash.org/"+fileName, Path.Combine(fileName));   
             builder.Attachments.Add (Path.Combine(fileName));
                 

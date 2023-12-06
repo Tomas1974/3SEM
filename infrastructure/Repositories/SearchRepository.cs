@@ -10,16 +10,16 @@ public class SearchRepository
 
     public SearchRepository(NpgsqlDataSource dataSource)
     {
-        _dataSource = dataSource; 
+       _dataSource = dataSource; 
     }
 
-    public IEnumerable<AvatarModel> SearchAvatar(string searchQuery)
+    public IEnumerable<Avatar> SearchAvatar(string searchQuery)
     {
-        var sql = $@"SELECT * FROM webshop.avatar WHERE avatar_name ILIKE '%{searchQuery}%' and deleted=false;";
+        var sql = $@"SELECT * FROM account.avatar WHERE avatar_name ILIKE '%{searchQuery}%' and deleted=false;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.Query<AvatarModel>(sql, new { searchQuery });
+            return conn.Query<Avatar>(sql, new { searchQuery });
         }
     }
 }
