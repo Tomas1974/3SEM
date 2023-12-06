@@ -16,7 +16,7 @@ public class OrderController : Controller
     }
 
     [HttpGet]
-    [Route("/order/all")]
+    [Route("api/order/all")]
     public ResponseDto GetAllOrder()
     {
         return new ResponseDto()
@@ -27,21 +27,21 @@ public class OrderController : Controller
     }
 
     [HttpPost]
-    [ValidateModel]
-    [Route("/order")]
-    public ResponseDto postOrder([FromBody] Order order)
+    //[ValidateModel]
+    [Route("api/order/post")]
+    public ResponseDto postOrder([FromBody] OrderModel order)
     {
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;
         return new ResponseDto()
         {
             MessageToClient = "Successfully created an order",
-            ResponseData = _orderService.CreateOrder(order.user_id)
+            ResponseData = _orderService.CreateOrder(order.UserId)
         };
     }
     
     [HttpDelete]
-    [ValidateModel]
-    [Route("/order/{order_id}")]
+    //[ValidateModel]
+    [Route("api/order/{oroder_id}")]
     public void deleteOrder([FromRoute] int order_id)
     {
         HttpContext.Response.StatusCode = 204;

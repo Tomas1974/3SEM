@@ -27,9 +27,9 @@ public class CustomerBuyController : Controller
     }
 
     [HttpPost]
-    [ValidateModel]
+    //[ValidateModel]
     [Route("/customerbuy")]
-    public ResponseDto postCustomerBuy([FromBody] CustomerBuy customerbuy)
+    public ResponseDto postCustomerBuy([FromBody] CustomerBuyModel customerbuy)
     {
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;
         return new ResponseDto()
@@ -40,7 +40,7 @@ public class CustomerBuyController : Controller
     }
     
     [HttpDelete]
-    [ValidateModel]
+    //[ValidateModel]
     [Route("/customerbuy/{customer_buy_id}")]
     public void deleteCustomerBuy([FromRoute] int customer_buy_id)
     {

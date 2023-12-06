@@ -16,8 +16,8 @@ public class SearchController : ControllerBase
     }
 
     [HttpGet]
-    [ValidateModel]
-    [Route("/avatar")]
+    //[ValidateModel]
+    [Route("api/search")]
     public ResponseDto SearchAvatar([FromQuery] string searchQuery)
     {
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;

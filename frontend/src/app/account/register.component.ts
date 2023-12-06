@@ -25,28 +25,11 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
             </ion-input>
           </ion-item>
 
-          <ion-item>
-            <ion-input formControlName="street" data-testid="addressInput" placeholder="Your address"
-                       label-placement="floating">
-              <div slot="label">Address
-                <ion-text *ngIf="street.touched && street.invalid" color="danger">
-                  Required
-                </ion-text>
-              </div>
-            </ion-input>
-          </ion-item>
+<<<<<<< Updated upstream
+=======
 
-          <ion-item>
-            <ion-input type="number" formControlName="zip" data-testid="zipcodeInput" placeholder="Your Zip-code"
-                       label-placement="floating">
-              <div slot="label">Zic code
-                <ion-text *ngIf="zip.touched && zip.invalid" color="danger">
-                  Required
-                </ion-text>
-              </div>
-            </ion-input>
-          </ion-item>
 
+>>>>>>> Stashed changes
           <ion-item>
             <ion-input formControlName="email" data-testid="emailInput" placeholder="Email (also used for login)"
                        label-placement="floating">
@@ -96,8 +79,6 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 export class RegisterComponent {
   form = this.fb.group({
     full_name: ['', Validators.required],
-    street: ['', Validators.required],
-    zip: [0, Validators.required],
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(8)]],
     passwordRepeat: ['', [Validators.required, CustomValidators.matchOther('password')]]
@@ -106,14 +87,6 @@ export class RegisterComponent {
 
   get full_name() {
     return this.form.controls.full_name;
-  }
-
-  get street() {
-    return this.form.controls.street;
-  }
-
-  get zip() {
-    return this.form.controls.zip;
   }
 
   get email() {

@@ -14,7 +14,7 @@ public class EmailController
     }
  
     [HttpPost]
-    [Route("/email/{order_id}")]
+    [Route("api/email/{order_id}")]
     public ResponseDto SendEmail([FromRoute] int order_id)
     { 
         _emailService.SendEmail(order_id);

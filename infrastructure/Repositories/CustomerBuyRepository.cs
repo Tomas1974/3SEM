@@ -13,34 +13,34 @@ public class CustomerBuyRepository
         _dataSource = dataSource;
     }
 
-    public IEnumerable<CustomerBuy> GetAllCustomerBuy()
+    public IEnumerable<CustomerBuyModel> GetAllCustomerBuy()
     {
         var sql =
-            @"SELECT * FROM account.customer_buy ORDER BY order_id;";
+            @"SELECT * FROM webshop.customer_buy ORDER BY order_id;";
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.Query<CustomerBuy>(sql);
+            return conn.Query<CustomerBuyModel>(sql);
         }
     }
 
-    public CustomerBuy CreateCustomerBuy(CustomerBuy customerBuy)
+    public CustomerBuyModel CreateCustomerBuy(CustomerBuyModel customerBuy)
     {
         var sql =
-            @"INSERT INTO account.customer_buy (order_id, avatar_id) VALUES (@order_id, @avatar_id) RETURNING *;";
+            @"INSERT INTO webshop.customer_buy (order_id, avatar_id) VALUES (@order_id, @avatar_id) RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<CustomerBuy>(sql, new { order_id=customerBuy.order_id, avatar_id=customerBuy.avatar_id });
+            return conn.QueryFirst<CustomerBuyModel>(sql, new { order_id=customerBuy.OrderId, avatar_id=customerBuy.AvatarId });
         }
     }
     
     public void DeleteCustomerBuy(int customer_buy_id)
     {
-        var sql = @"DELETE FROM account.customer_buy WHERE account.customer_buy.customer_buy_id = @customer_buy_id RETURNING *;";
+        var sql = @"DELETE FROM webshop.customer_buy WHERE webshop.customer_buy.customer_buy_id = @customer_buy_id RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.QueryFirst<CustomerBuy>(sql, new {customer_buy_id});
+            conn.QueryFirst<CustomerBuyModel>(sql, new {customer_buy_id});
         }
     }
 }

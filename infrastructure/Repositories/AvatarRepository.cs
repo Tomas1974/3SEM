@@ -6,7 +6,7 @@ namespace infrastructure.Repositories;
 
 public class AvatarRepository
 {
-    private readonly NpgsqlDataSource _dataSource;
+     private readonly NpgsqlDataSource _dataSource;
 
     public AvatarRepository(NpgsqlDataSource dataSource)
     {
@@ -14,37 +14,37 @@ public class AvatarRepository
     }
     
     
-    public IEnumerable<Avatar> GetAllAvatars()
+    public IEnumerable<AvatarModel> GetAllAvatars()
     {
-        var sql = @"SELECT * FROM account.avatar where deleted=false ORDER BY avatar_id;";
+        var sql = @"SELECT * FROM webshop.avatar where deleted=false ORDER BY avatar_id;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.Query<Avatar>(sql);
+            return conn.Query<AvatarModel>(sql);
         }
     }
     
     
-    public Avatar CreateAvatar(Avatar avatar)
+    public AvatarModel CreateAvatar(AvatarModel avatar)
     {
         var sql =
-            @" INSERT INTO account.avatar (avatar_name, avatar_price, information,deleted) VALUES (@avatar_name, @avatar_price, @information, false) RETURNING *;";
+            @" INSERT INTO webshop.avatar (avatar_name, avatar_price, information,deleted) VALUES (@avatar_name, @avatar_price, @information, false) RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Avatar>(sql, new { avatar_name=avatar.avatar_name, avatar_price=avatar.avatar_price, information=avatar.information });
+            return conn.QueryFirst<AvatarModel>(sql, new { avatar_name=avatar.AvatarName, avatar_price=avatar.AvatarPrice, information=avatar.Information});
         }
     }
     
-    public Avatar UpdateAvatar(int avatar_id, Avatar avatar)
+    public AvatarModel UpdateAvatar(int avatar_id, AvatarModel avatar)
     {
         var sql =
-            @"UPDATE account.avatar SET avatar_name = @avatar_name, avatar_price = @avatar_price, information = @information where avatar_id = @avatar_id
+            @"UPDATE webshop.avatar SET avatar_name = @avatar_name, avatar_price = @avatar_price, information = @information where avatar_id = @avatar_id
 RETURNING *";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Avatar>(sql, new { avatar_id, avatar_name=avatar.avatar_name, avatar_price=avatar.avatar_price,information=avatar.information});
+            return conn.QueryFirst<AvatarModel>(sql, new { avatar_id, avatar_name=avatar.AvatarName, avatar_price=avatar.AvatarPrice,information=avatar.Information});
         }
     }
 
@@ -53,27 +53,27 @@ RETURNING *";
     {
         
         var sql =
-            @"UPDATE account.avatar SET deleted = true where avatar_id = @avatar_id
+            @"UPDATE webshop.avatar SET deleted = true where avatar_id = @avatar_id
 RETURNING *"; 
        
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.QueryFirst<Avatar>(sql, new { avatar_id });
+            conn.QueryFirst<AvatarModel>(sql, new { avatar_id });
         }
     }
     
-    public Avatar CheckIfNameExist(string avatar_name)    {
+    public AvatarModel CheckIfNameExist(string avatar_name)    {
 
-        var sql = $@"SELECT * FROM account.avatar WHERE avatar_name = @avatar_name;";
+        var sql = $@"SELECT * FROM webshop.avatar WHERE avatar_name = @avatar_name;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirstOrDefault<Avatar>(sql, new { avatar_name });
+            return conn.QueryFirstOrDefault<AvatarModel>(sql, new { avatar_name });
         }
     }
     public string GetAvatarInformation(int avatar_id)
     {
-        var sql = @"SELECT information FROM account.avatar where deleted = false AND avatar_id = @avatar_id;";
+        var sql = @"SELECT information FROM webshop.avatar where deleted = false AND avatar_id = @avatar_id;";
 
         using (var conn = _dataSource.OpenConnection())
         {

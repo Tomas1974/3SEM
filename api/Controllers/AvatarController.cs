@@ -29,9 +29,9 @@ public class AvatarController : Controller
     }
     
     [HttpPost]
-    [ValidateModel]
+    //[ValidateModel]
     [Route("/avatar")]
-    public ResponseDto postAvatar([FromBody] Avatar avatar)
+    public ResponseDto postAvatar([FromBody] AvatarModel avatar)
     {
         return new ResponseDto()
         {
@@ -43,7 +43,7 @@ public class AvatarController : Controller
 
     [HttpPut]
     [Route("/avatar/{avatar_id}")]
-    public ResponseDto putAvatar([FromRoute] int avatar_id, [FromBody] Avatar avatar)
+    public ResponseDto putAvatar([FromRoute] int avatar_id, [FromBody] AvatarModel avatar)
     {
         return new ResponseDto()
         {
@@ -53,7 +53,7 @@ public class AvatarController : Controller
     }
     
     [HttpDelete]
-    [ValidateModel]
+    //[ValidateModel]
     [Route("/avatar/{avatar_id}")]
     public object deleteAvatar([FromRoute] int avatar_id)
     {
@@ -64,7 +64,7 @@ public class AvatarController : Controller
         };
     }
     [HttpGet]
-    [ValidateModel]
+    //[ValidateModel]
     [Route("/avatar/{avatar_id}")]
     public ResponseDto getAvatarInformation([FromRoute]int avatar_id)
     {

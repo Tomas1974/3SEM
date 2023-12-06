@@ -12,12 +12,12 @@ public class CustomerBuyService
         _customerBuyRepository = customerBuyRepository;
     }
 
-    public IEnumerable<CustomerBuy> GetAllCustomerBuy()
+    public IEnumerable<CustomerBuyModel> GetAllCustomerBuy()
     {
         return _customerBuyRepository.GetAllCustomerBuy();
     }
 
-    public CustomerBuy CreateCustomerBuy(CustomerBuy customerBuy)
+    public CustomerBuyModel CreateCustomerBuy(CustomerBuyModel customerBuy)
     {
         return _customerBuyRepository.CreateCustomerBuy(customerBuy);
     }

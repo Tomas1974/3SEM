@@ -13,34 +13,34 @@ public class OrderRepository
         _dataSource = dataSource;
     }
 
-    public IEnumerable<Order> GetAllOrder()
+    public IEnumerable<OrderModel> GetAllOrder()
     {
-        var sql = @"SELECT * FROM account.order ORDER BY order_id;";
+        var sql = @"SELECT * FROM webshop.order ORDER BY order_id;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.Query<Order>(sql);
+            return conn.Query<OrderModel>(sql);
         }
     }
 
-    public Order CreateOrder(int user_id)
+    public OrderModel CreateOrder(int user_id)
     {
         var sql =
-            @"INSERT INTO account.order (user_id) VALUES (@user_id) RETURNING *;";
+            @"INSERT INTO webshop.order (user_id) VALUES (@user_id) RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            return conn.QueryFirst<Order>(sql, new { user_id });
+            return conn.QueryFirst<OrderModel>(sql, new { user_id });
         }
     }
 
     public void DeleteOrder(int order_id)
     {
-        var sql = @"DELETE FROM account.order WHERE order_id = @order_id RETURNING *;";
+        var sql = @"DELETE FROM webshop.order WHERE order_id = @order_id RETURNING *;";
 
         using (var conn = _dataSource.OpenConnection())
         {
-            conn.QueryFirst<Order>(sql, new { order_id });
+            conn.QueryFirst<OrderModel>(sql, new { order_id });
         }
     }
 }

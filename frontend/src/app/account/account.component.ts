@@ -15,9 +15,8 @@ import { AccountService, User } from "./account.service";
           <ion-item>
             <ion-input label="Email" [value]="account.email"></ion-input>
           </ion-item>
-
           <ion-item>
-            <ion-toggle [checked]="account.isAdmin">Administrator</ion-toggle>
+            <ion-input label="Admin" [value]="account.admin"></ion-input>
           </ion-item>
         </ion-list>
         <ion-button>Update</ion-button>

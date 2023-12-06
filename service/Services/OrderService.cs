@@ -12,12 +12,12 @@ public class OrderService
         _orderRepository = orderRepository;
     }
 
-    public IEnumerable<Order> GetAllOrder()
+    public IEnumerable<OrderModel> GetAllOrder()
     {
         return _orderRepository.GetAllOrder();
     }
 
-    public Order CreateOrder(int user_id)
+    public OrderModel CreateOrder(int user_id)
     {
         return _orderRepository.CreateOrder(user_id);
     }
