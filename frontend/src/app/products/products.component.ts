@@ -2,6 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import {ProductsService, Avatar} from './products.service';
 import {CartService} from '../cart/cart.service';
 import {Router} from "@angular/router";
+import {ModalController} from "@ionic/angular";
+import {createAvatarComponent} from "./createAvatarComponent";
 
 @Component({
   template: `
@@ -21,9 +23,11 @@ import {Router} from "@angular/router";
                   <ion-icon name="cart-outline"></ion-icon>
                 </ion-button>
               </ion-card-content>
+              <ion-button class="button" (click)="updateAvatar(avatar)">Update</ion-button>
             </ion-card>
           </ion-col>
         </ion-row>
+        <ion-button class="button" (click)="createAvatar()">Create</ion-button>
       </ion-grid>
     </ion-content>
   `
@@ -36,7 +40,7 @@ export class ProductsComponent implements OnInit {
   cartArray: Avatar[];
 
 
-  constructor(private productService: ProductsService, readonly router: Router) {
+  constructor(private productService: ProductsService, readonly router: Router, public modalController: ModalController) {
 
     this.cartArray = [];
 
@@ -56,4 +60,15 @@ export class ProductsComponent implements OnInit {
     })
   }
 
+  async updateAvatar(avatar: Avatar){
+
+  }
+
+
+  async createAvatar(){
+    const model = await this.modalController.create({
+      component: createAvatarComponent
+    })
+    model.present();
+  }
 }

@@ -26,7 +26,7 @@ public class Tests
             password = password
         };
         
-        var httpResponse  =await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/register", testUser);
+        var httpResponse  = await new HttpClient().PostAsJsonAsync(Helper.ApiBaseUrl + "api/account/register", testUser);
         var responseBodyString = await httpResponse.Content.ReadAsStringAsync();
         var obj = JsonConvert.DeserializeObject<ResponseDto<User>>(responseBodyString);
 

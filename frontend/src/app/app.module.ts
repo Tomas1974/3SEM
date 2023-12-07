@@ -21,6 +21,7 @@ import { AccountService } from './account/account.service';
 import { ProductsService } from './products/products.service';
 import {CartService} from "./cart/cart.service";
 import {CartComponent} from "./cart/cart.component";
+import {createAvatarComponent} from "./products/createAvatarComponent";
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import {CartComponent} from "./cart/cart.component";
     AccountComponent,
     RegisterComponent,
     LoginComponent,
-    CartComponent
+    CartComponent,
+    createAvatarComponent
   ],
   imports: [
     BrowserModule,
