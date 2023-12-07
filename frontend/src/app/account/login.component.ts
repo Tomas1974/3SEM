@@ -73,9 +73,9 @@ export class LoginComponent {
 
   async submit() {
     if (this.form.invalid) return;
+
     const response = await firstValueFrom(this.http.post<ResponseDto<TokenService>>(environment.baseUrl + '/api/account/login', this.form.value));
     this.token.setToken(JSON.stringify(response.responseData));
-
 
 
     const encodedToken = JSON.stringify(sessionStorage.getItem("token"));
@@ -90,14 +90,14 @@ export class LoginComponent {
      *   iat: 1393268893
      * }
      */
-
 // decode header by passing in options (useful for when you need `kid` to verify a JWT):
     const decodedHeader = jwtDecode(encodedToken, { header: true });
     console.log(decodedHeader);
 
+    console.log(this.form.getRawValue());
 
-
-
+    const response = (this.http.post<ResponseDto<TokenService>>('/api/account/login', this.form.getRawValue()));
+    this.token.setToken(JSON.stringify(response));
 
     (await this.toast.create({
       message: "Welcome back!",
