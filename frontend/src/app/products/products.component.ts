@@ -23,7 +23,7 @@ import {jwtDecode} from "jwt-decode";
       <br>
       <ion-list inset="true" *ngFor="let avatar of avatar$;"> <!-- Fjernet index i -->
         <ion-item *ngIf="searchText === '' || avatar.avatar_name.toLowerCase().includes(searchText)">
-          <img ngSrc="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/> <!-- src er blevet til ngSrc -->
+          <img src="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/>
           <ion-label>{{avatar.avatar_name}}</ion-label>
           <ion-button  (click)="details(avatar)" fill="clear">Information</ion-button> <!-- Fjernet class "button -->
           <ion-button *ngIf="this.role === 'Admin'"  (click)="updateAvatar(avatar)" fill="clear">Update</ion-button>
@@ -57,34 +57,35 @@ import {jwtDecode} from "jwt-decode";
 
 export class ProductsComponent implements OnInit {
 
-  avatarElement: Avatar | undefined;
+ //avatarElement: Avatar | undefined;
   avatar$?: Avatar[];
-  cartArray: Avatar[];
+  cartArray: Avatar[]= []; //Sådan her eller som før til at initialisering af Avatars
   deletedAvatar?: Avatar[];
   role: any;
-
+  searchText: string = '';
 
   constructor(private productService: ProductsService, readonly router: Router, public modalController: ModalController, private data: DataService, public http: HttpClient, public state: State, public toastController: ToastController) {
-    this.cartArray = [];
+ //   this.cartArray = [];
 }
 
-  searchText: string = '';
+
 
   onSearchTextEntered(searchValue: string) {
     this.searchText = searchValue;
-    console.log(this.searchText)
+   // console.log(this.searchText)
   }
 
   saveData(avatar: Avatar){
     this.cartArray.push(avatar);
     sessionStorage.setItem("cart", JSON.stringify(this.cartArray))
+
   }
 
   ngOnInit(): void {
     this.productService.getAllProducts().subscribe(result => {
       this.avatar$ = result.responseData;
       this.state.avatar = result.responseData;
-      this.data.currentNumber.subscribe(avatarElement => this.avatarElement = avatarElement)
+   //  this.data.currentNumber.subscribe(avatarElement => this.avatarElement = avatarElement) //Jeg har ikke fundet relevansen af denne linje
     })
 
     this.productService.getAllDeletedProducts().subscribe(result =>{
