@@ -21,30 +21,35 @@ import {jwtDecode} from "jwt-decode";
         <app-search (searchTextChanged)="onSearchTextEntered($event)" style="position: absolute; top: 0;"></app-search>
 
       <br>
-      <ion-list inset="true" *ngFor="let avatar of avatar$; index as i">
+      <ion-list inset="true" *ngFor="let avatar of avatar$;"> <!-- Fjernet index i -->
         <ion-item *ngIf="searchText === '' || avatar.avatar_name.toLowerCase().includes(searchText)">
-          <img src="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/>
+          <img ngSrc="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/> <!-- src er blevet til ngSrc -->
           <ion-label>{{avatar.avatar_name}}</ion-label>
-          <ion-button  class="button" (click)="details(avatar)" fill="clear">Information</ion-button>
-          <ion-button *ngIf="this.role === 'Admin'" class="button" (click)="updateAvatar(avatar)" fill="clear">Update</ion-button>
+          <ion-button  (click)="details(avatar)" fill="clear">Information</ion-button> <!-- Fjernet class "button -->
+          <ion-button *ngIf="this.role === 'Admin'"  (click)="updateAvatar(avatar)" fill="clear">Update</ion-button>
           <ion-label>{{avatar.avatar_price}} €</ion-label>
 
-          <ion-button class="button" (click)="saveData(avatar)" fill="clear" >
+          <ion-button  (click)="saveData(avatar)" fill="clear" >
             <ion-icon name="cart-outline"></ion-icon>
           </ion-button>
-          <ion-button *ngIf="this.role === 'Admin'" class="button" (click)="deleteAvatar(avatar.avatar_id)" fill="clear">Delete</ion-button>
+          <ion-button *ngIf="this.role === 'Admin'"  (click)="deleteAvatar(avatar.avatar_id)" fill="clear">Delete</ion-button>
           </ion-item>
       </ion-list>
-      <ion-button *ngIf="this.role === 'Admin'" class="button" (click)="createAvatar()">Create</ion-button>
 
+      <ion-button *ngIf="this.role === 'Admin'"  (click)="createAvatar()">Create</ion-button>
       <ion-item *ngIf="this.role === 'Admin'">
-        <ion-list inset="true" *ngFor="let avatar of deletedAvatar; index as i">
+
+
+
+        <ion-list inset="true" *ngFor="let avatar of deletedAvatar;">
           <img src="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/>
           <ion-label>{{avatar.avatar_name}}</ion-label>
-          <ion-button  class="button" (click)="details(avatar)" fill="clear">Information</ion-button>
+          <ion-button  (click)="details(avatar)" fill="clear">Information</ion-button>
           <ion-label>{{avatar.avatar_price}} €</ion-label>
-          <ion-button class="button" (click)="enable(avatar.avatar_id)" fill="clear">Enable</ion-button>
+          <ion-button  (click)="enable(avatar.avatar_id)" fill="clear">Enable</ion-button>
           </ion-list>
+
+
       </ion-item>
     </ion-content>
   `

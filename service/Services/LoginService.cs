@@ -64,7 +64,8 @@ public class LoginService
             new Claim("Id", model.user_id.ToString())
         };
 
-        var token = new JwtSecurityToken(_config.GetValue<string>("Jwt:Issuer"),
+        var token = new JwtSecurityToken(
+            _config.GetValue<string>("Jwt:Issuer"),
             _config.GetValue<string>("Jwt:Audience"),
             claims,
             expires: DateTime.Now.AddMinutes(15),
