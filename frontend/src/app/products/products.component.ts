@@ -57,7 +57,7 @@ import {jwtDecode} from "jwt-decode";
 
 export class ProductsComponent implements OnInit {
 
- //avatarElement: Avatar | undefined;
+ //avatarElement: Avatar | undefined; //Jeg har ikke fundet denne linjes relevans
   avatar$?: Avatar[];
   cartArray: Avatar[]= []; //Sådan her eller som før til at initialisering af Avatars
   deletedAvatar?: Avatar[];
@@ -88,17 +88,20 @@ export class ProductsComponent implements OnInit {
    //  this.data.currentNumber.subscribe(avatarElement => this.avatarElement = avatarElement) //Jeg har ikke fundet relevansen af denne linje
     })
 
-    this.productService.getAllDeletedProducts().subscribe(result =>{
-      this.deletedAvatar = result.responseData;
-    })
-    this.getRole();
+  this.productService.getAllDeletedProducts().subscribe(result =>{ // Fjernet og sat i egen metode
+    this.deletedAvatar = result.responseData;
+  })
+   this.getRole();
+
   }
 
+
+
   async createAvatar(){
-    const model = await this.modalController.create({
+    const modal = await this.modalController.create({ //model er rettet til modal
       component: CreateAvatarComponent
     })
-    model.present();
+    modal.present();
   }
 
   async updateAvatar(avatarElement: Avatar){
@@ -115,6 +118,8 @@ export class ProductsComponent implements OnInit {
     try {
       await firstValueFrom(this.http.delete(environment.baseUrl + '/avatar/' + avatar_id))
       this.ngOnInit()
+
+
       const toast = await this.toastController.create({
         message: 'The avatar was successfully deleted',
         duration: 1233,
@@ -146,7 +151,7 @@ export class ProductsComponent implements OnInit {
     const decodedToken  = jwtDecode(token);
 
     // @ts-ignore
-    console.log(decodedToken["IsAdmin"]!)
+   // console.log(decodedToken["IsAdmin"]!)
 
     // @ts-ignore
     this.role = decodedToken["IsAdmin"]!;
@@ -156,6 +161,7 @@ export class ProductsComponent implements OnInit {
     try {
       await firstValueFrom(this.http.delete(environment.baseUrl + '/avatar/enable/' + avatar_id))
       this.ngOnInit()
+
       const toast = await this.toastController.create({
         message: 'The avatar was successfully enabled',
         duration: 1233,
