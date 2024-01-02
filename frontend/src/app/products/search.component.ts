@@ -2,14 +2,15 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 
 @Component({
   selector: 'app-search',
-  templateUrl: './search.component.html',
+  template: ' <input type="text" placeholder="Search.." [(ngModel)]="enteredSearchValue" (input)="onSearchTextChanged()">',
 
 })
-export class SearchComponent  implements OnInit {
+export class SearchComponent  //implements OnInit {
+{
 
-  constructor() { }
+//  constructor() { }
 
-  ngOnInit() {}
+ // ngOnInit() {}
 
   enteredSearchValue: string = '';
 

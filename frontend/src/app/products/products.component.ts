@@ -34,19 +34,19 @@ import {jwtDecode} from "jwt-decode";
           </ion-button>
           <ion-button *ngIf="this.role === 'Admin'"  (click)="deleteAvatar(avatar.avatar_id)" fill="clear">Delete</ion-button>
           </ion-item>
-      </ion-list>
-
-      <ion-button *ngIf="this.role === 'Admin'"  (click)="createAvatar()">Create</ion-button>
-      <ion-item *ngIf="this.role === 'Admin'">
-
+          </ion-list>
+           <ion-button *ngIf="this.role === 'Admin'"  (click)="createAvatar()">Create</ion-button>
+           <ion-item *ngIf="this.role === 'Admin'">
 
 
         <ion-list inset="true" *ngFor="let avatar of deletedAvatar;">
+          <ion-item *ngIf="searchText === '' || avatar.avatar_name.toLowerCase().includes(searchText)"> <!-- tilføjet search i anden tabel-->
           <img src="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/>
           <ion-label>{{avatar.avatar_name}}</ion-label>
           <ion-button  (click)="details(avatar)" fill="clear">Information</ion-button>
           <ion-label>{{avatar.avatar_price}} €</ion-label>
           <ion-button  (click)="enable(avatar.avatar_id)" fill="clear">Enable</ion-button>
+          </ion-item>
           </ion-list>
 
 
@@ -71,7 +71,7 @@ export class ProductsComponent implements OnInit {
 
 
   onSearchTextEntered(searchValue: string) {
-    this.searchText = searchValue;
+    this.searchText = searchValue.toLowerCase(); //Rettet så begge sider er lowercase
    // console.log(this.searchText)
   }
 
@@ -88,7 +88,7 @@ export class ProductsComponent implements OnInit {
    //  this.data.currentNumber.subscribe(avatarElement => this.avatarElement = avatarElement) //Jeg har ikke fundet relevansen af denne linje
     })
 
-  this.productService.getAllDeletedProducts().subscribe(result =>{ // Fjernet og sat i egen metode
+  this.productService.getAllDeletedProducts().subscribe(result =>{
     this.deletedAvatar = result.responseData;
   })
    this.getRole();
@@ -115,7 +115,7 @@ export class ProductsComponent implements OnInit {
 
   async deleteAvatar(avatar_id: number | undefined)
   {
-    try {
+
       await firstValueFrom(this.http.delete(environment.baseUrl + '/avatar/' + avatar_id))
       this.ngOnInit()
 
@@ -126,15 +126,7 @@ export class ProductsComponent implements OnInit {
         color: "success"
         })
       toast.present();
-    } catch (e) {
-      if(e instanceof HttpErrorResponse){
-        const toast = await this.toastController.create({
-          message: 'The avatar could not be deleted',
-          color: "danger"
-        })
-        toast.present();
-      }
-    }
+
   }
 
   async details(avatar: Avatar){
@@ -158,7 +150,7 @@ export class ProductsComponent implements OnInit {
   }
 
   async enable(avatar_id: number | undefined){
-    try {
+
       await firstValueFrom(this.http.delete(environment.baseUrl + '/avatar/enable/' + avatar_id))
       this.ngOnInit()
 
@@ -168,14 +160,9 @@ export class ProductsComponent implements OnInit {
         color: "success"
       })
       toast.present();
-    } catch (e) {
-      if(e instanceof HttpErrorResponse){
-        const toast = await this.toastController.create({
-          message: 'The avatar could not be enabled',
-          color: "danger"
-        })
-        toast.present();
+
+
       }
-    }
-  }
+
+
 }
