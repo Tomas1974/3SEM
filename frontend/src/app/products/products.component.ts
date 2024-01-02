@@ -119,7 +119,6 @@ export class ProductsComponent implements OnInit {
       await firstValueFrom(this.http.delete(environment.baseUrl + '/avatar/' + avatar_id))
       this.ngOnInit()
 
-
       const toast = await this.toastController.create({
         message: 'The avatar was successfully deleted',
         duration: 1233,

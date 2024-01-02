@@ -88,8 +88,8 @@ public class AvatarController : Controller
     [Route("/avatar/enable/{avatar_id}")]
     public object enableAvatar([FromRoute] int avatar_id)
     {
-        
-        _avatarService.enableAvatar(avatar_id);
+        int dum = 0;
+        _avatarService.enableAvatar(dum);
         return new ResponseDto()
         {
             MessageToClient = "Successfully enabled an avatar",
