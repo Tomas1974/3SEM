@@ -64,8 +64,15 @@ export class ProductsComponent implements OnInit {
   role: any;
   searchText: string = '';
 
-  constructor(private productService: ProductsService, readonly router: Router, public modalController: ModalController, private data: DataService, public http: HttpClient, public state: State, public toastController: ToastController) {
- //   this.cartArray = [];
+  constructor(private productService: ProductsService
+              , readonly router: Router
+              , public modalController: ModalController
+              , private data: DataService
+              , public https: HttpClient
+              , public state: State
+              , public toastController: ToastController) {
+
+    //   this.cartArray = [];
 }
 
 
@@ -116,7 +123,7 @@ export class ProductsComponent implements OnInit {
   async deleteAvatar(avatar_id: number | undefined)
   {
 
-      await firstValueFrom(this.http.delete(environment.baseUrl + '/avatar/' + avatar_id))
+      await firstValueFrom(this.https.delete(environment.baseUrl + '/avatar/' + avatar_id))
       this.ngOnInit()
 
       const toast = await this.toastController.create({
@@ -150,7 +157,7 @@ export class ProductsComponent implements OnInit {
 
   async enable(avatar_id: number | undefined){
 
-      await firstValueFrom(this.http.delete(environment.baseUrl + '/avatar/enable/' + avatar_id))
+      await firstValueFrom(this.https.delete(environment.baseUrl + '/avatar/enable/' + avatar_id))
       this.ngOnInit()
 
       const toast = await this.toastController.create({

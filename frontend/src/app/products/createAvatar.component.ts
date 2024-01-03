@@ -49,14 +49,14 @@ export class CreateAvatarComponent{
     information: this.information
   })
 
-  constructor(public fb: FormBuilder, public http: HttpClient, public state:State, public toastController: ToastController, public modalController: ModalController, private readonly router: Router) {
+  constructor(public fb: FormBuilder, public https: HttpClient, public state:State, public toastController: ToastController, public modalController: ModalController, private readonly router: Router) {
   }
   observable: any;
   response: any;
 
   async submit(){
     try {
-      let obs = this.http.post<ResponseDto<Avatar>>(environment.baseUrl + '/avatar', this.createNewAvatarForm.value)
+      let obs = this.https.post<ResponseDto<Avatar>>(environment.baseUrl + '/avatar', this.createNewAvatarForm.value)
       var response = await firstValueFrom<ResponseDto<Avatar>>(obs)
       this.state.avatar.push(response.responseData);
       const toast = await this.toastController.create({

@@ -5,6 +5,7 @@ using System.Text;
 using infrastructure.DataModels;
 using infrastructure.Repositories;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 
@@ -15,16 +16,18 @@ public class LoginService
     private PasswordHashRepository _passwordHashRepository;
     private UserRepository _userRepository;
     private IConfiguration _config;
+    private IHostEnvironment _hostEnvironment;
 
     /*
      * Constructor to initialize the service with required dependencies.
      */
     public LoginService(ILogger<LoginService> logger, UserRepository userRepository,
-        PasswordHashRepository passwordHashRepository, IConfiguration config)
+        PasswordHashRepository passwordHashRepository, IConfiguration config, IHostEnvironment hostEnvironment)
     {
        _userRepository = userRepository;
         _passwordHashRepository = passwordHashRepository;
         _config = config;
+        _hostEnvironment = hostEnvironment;
     }
     
     /*
@@ -55,6 +58,10 @@ public class LoginService
     public string GenerateToken(UserModel model)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config.GetValue<string>("Jwt:Key")));
+        
+        Console.WriteLine(_config.GetValue<string>("Jwt:Secret"));
+        Console.WriteLine(_hostEnvironment.EnvironmentName);
+        
         var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
         var claims = new[]
         {

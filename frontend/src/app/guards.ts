@@ -13,8 +13,8 @@ export class AuthenticatedGuard implements CanActivate {
   }
 
   async canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+   // route: ActivatedRouteSnapshot,
+   // state: RouterStateSnapshot
   ): Promise<boolean | UrlTree> {
     const isAuthenticated = !!this.token.getToken();
     if (isAuthenticated) return true;
