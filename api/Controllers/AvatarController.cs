@@ -1,6 +1,7 @@
 ﻿using api.Filters;
 using api.TransferModels;
 using infrastructure.DataModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
 
@@ -21,6 +22,7 @@ public class AvatarController : Controller
      */
     [HttpGet]
     [Route("/avatar/all")]
+    [Authorize]
     public ResponseDto GetAllAvatars()
     {
         return new ResponseDto()
@@ -32,6 +34,7 @@ public class AvatarController : Controller
     
     [HttpGet]
     [Route("/avatar/allDeleted")]
+    [Authorize]
     public ResponseDto GetAllDeletedAvatars()
     {
         return new ResponseDto()
@@ -47,6 +50,7 @@ public class AvatarController : Controller
     [HttpPost]
     [ValidateModel]
     [Route("/avatar")]
+    [Authorize]
     public ResponseDto postAvatar([FromBody] AvatarModel avatar)
     {
         return new ResponseDto()
@@ -61,6 +65,7 @@ public class AvatarController : Controller
      */
     [HttpPut]
     [Route("/avatar/{avatar_id}")]
+    [Authorize]
     public ResponseDto putAvatar([FromRoute] int avatar_id, [FromBody] AvatarModel avatar)
     {
         return new ResponseDto()
@@ -74,7 +79,9 @@ public class AvatarController : Controller
      * Deletes an existing avatar from the database. 
      */
     [HttpDelete]
+    
     [Route("/avatar/{avatar_id}")]
+    [Authorize]
     public object deleteAvatar([FromRoute] int avatar_id)
     {
         _avatarService.deleteAvatar(avatar_id);
@@ -86,10 +93,11 @@ public class AvatarController : Controller
 
     [HttpDelete]
     [Route("/avatar/enable/{avatar_id}")]
+    [Authorize(Roles = "Admin")]
     public object enableAvatar([FromRoute] int avatar_id)
     {
-        int dum = 0;
-        _avatarService.enableAvatar(dum);
+        
+        _avatarService.enableAvatar(avatar_id);
         return new ResponseDto()
         {
             MessageToClient = "Successfully enabled an avatar",
@@ -101,6 +109,7 @@ public class AvatarController : Controller
      */
     [HttpGet]
     [Route("/avatar/{avatar_id}")]
+    [Authorize]
     public ResponseDto getAvatarInformation([FromRoute]int avatar_id)
     {
         

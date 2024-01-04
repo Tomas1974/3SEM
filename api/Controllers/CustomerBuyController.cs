@@ -1,5 +1,6 @@
 ﻿using api.TransferModels;
 using infrastructure.DataModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using service.Services;
 
@@ -19,6 +20,7 @@ public class CustomerBuyController : Controller
      */
     [HttpGet]
     [Route("/customerbuy/all")]
+    [Authorize]
     public ResponseDto GetAllCustomerBuy()
     {
         return new ResponseDto()
@@ -33,6 +35,7 @@ public class CustomerBuyController : Controller
      */
     [HttpPost]
     [Route("/customerbuy")]
+    [Authorize]
     public ResponseDto postCustomerBuy([FromBody] CustomerBuyModel customerbuy)
     {
         HttpContext.Response.StatusCode = StatusCodes.Status201Created;
@@ -48,6 +51,7 @@ public class CustomerBuyController : Controller
      */
     [HttpDelete]
     [Route("/customerbuy/{customer_buy_id}")]
+    [Authorize]
     public void deleteCustomerBuy([FromRoute] int customer_buy_id)
     {
         _customerBuyService.deleteCustomerBuy(customer_buy_id);

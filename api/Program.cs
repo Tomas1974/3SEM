@@ -65,6 +65,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJw
         ValidIssuer = builder.Configuration.GetValue<string>("Jwt:Issuer"),
         ValidAudience = builder.Configuration.GetValue<string>("Jwt:Audience"),
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration.GetValue<string>("Jwt:Key")))
+        
     };
 });
 
@@ -88,7 +89,6 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.UseHttpsRedirection();
-
 
 
 app.UseMiddleware<GlobalExceptionHandler>();

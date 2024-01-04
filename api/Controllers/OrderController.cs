@@ -40,7 +40,7 @@ public class OrderController : Controller
      * Creates a new order in the database. 
      */
     [HttpPost]
-    //[ValidateModel]
+   [ValidateModel]
     [Route("api/order/post")]
     public ResponseDto postOrder([FromBody] OrderModel order)
     {
@@ -56,7 +56,7 @@ public class OrderController : Controller
      * Deletes an existing order from the database. 
      */
     [HttpDelete]
-    //[ValidateModel]
+    [ValidateModel]
     [Route("api/order/{order_id}")]
     public void deleteOrder([FromRoute] int order_id)
     {
