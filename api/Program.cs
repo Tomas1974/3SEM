@@ -3,10 +3,12 @@ using System.Text;
 using api.Middleware;
 using infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using service;
 using service.Services;
 using EmailService = service.Services.EmailService;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +53,11 @@ builder.Services.AddSpaStaticFiles(conf => conf.RootPath = frontEndRelativePath)
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+
+
+
+
+
 
 //For JWT
 

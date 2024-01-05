@@ -32,7 +32,7 @@ import {DetailsAvatarComponent} from "./products/detailsAvatar.component";
     AppComponent,
     HeaderComponent,
     TabsComponent,
-    ProductsComponent,
+    ProductsComponent, //Jeg er her!
     UsersComponent,
     AccountComponent,
     RegisterComponent,

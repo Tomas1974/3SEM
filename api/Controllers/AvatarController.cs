@@ -93,7 +93,7 @@ public class AvatarController : Controller
 
     [HttpDelete]
     [Route("/avatar/enable/{avatar_id}")]
-    [Authorize(Roles = "Admin")]
+    [Authorize]
     public object enableAvatar([FromRoute] int avatar_id)
     {
         

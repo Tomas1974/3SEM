@@ -24,33 +24,33 @@ import {jwtDecode} from "jwt-decode";
       <ion-list inset="true" *ngFor="let avatar of avatar$;"> <!-- Fjernet index i -->
         <ion-item *ngIf="searchText === '' || avatar.avatar_name.toLowerCase().includes(searchText)">
           <img src="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/>
-          <ion-label>{{avatar.avatar_name}}</ion-label>
+          <ion-label>{{avatar.avatar_name}}</ion-label>         <!-- interpolation-->
           <ion-button  (click)="details(avatar)" fill="clear">Information</ion-button> <!-- Fjernet class "button -->
           <ion-button *ngIf="this.role === 'Admin'"  (click)="updateAvatar(avatar)" fill="clear">Update</ion-button>
           <ion-label>{{avatar.avatar_price}} €</ion-label>
 
           <ion-button  (click)="saveData(avatar)" fill="clear" >
-            <ion-icon name="cart-outline"></ion-icon>
+          <ion-icon name="cart-outline"></ion-icon>
           </ion-button>
-          <ion-button *ngIf="this.role === 'Admin'"  (click)="deleteAvatar(avatar.avatar_id)" fill="clear">Delete</ion-button>
+          <ion-button *ngIf="this.role === 'Admin'"  (click)="deleteAvatar(avatar.avatar_id)" fill="clear">Delete</ion-button> <!-- Her -->
           </ion-item>
           </ion-list>
            <ion-button *ngIf="this.role === 'Admin'"  (click)="createAvatar()">Create</ion-button>
-           <ion-item *ngIf="this.role === 'Admin'">
 
+
+           <ng-container *ngIf="this.role === 'Admin'">
 
         <ion-list inset="true" *ngFor="let avatar of deletedAvatar;">
-          <ion-item *ngIf="searchText === '' || avatar.avatar_name.toLowerCase().includes(searchText)"> <!-- tilføjet search i anden tabel-->
+          <ion-list *ngIf="searchText === '' || avatar.avatar_name.toLowerCase().includes(searchText)"> <!-- tilføjet search i anden tabel-->
           <img src="https://robohash.org/{{avatar.avatar_name}}.png" height="150px" width="150px"/>
           <ion-label>{{avatar.avatar_name}}</ion-label>
           <ion-button  (click)="details(avatar)" fill="clear">Information</ion-button>
           <ion-label>{{avatar.avatar_price}} €</ion-label>
           <ion-button  (click)="enable(avatar.avatar_id)" fill="clear">Enable</ion-button>
-          </ion-item>
+          </ion-list>
           </ion-list>
 
-
-      </ion-item>
+      </ng-container>
     </ion-content>
   `
 })

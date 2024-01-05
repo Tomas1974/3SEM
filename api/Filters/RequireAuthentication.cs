@@ -5,10 +5,10 @@ namespace api.Filters;
 
 public class RequireAuthentication : ActionFilterAttribute
 {
-    /*
-    public override void OnActionExecuting(ActionExecutingContext context)
-    {
-        if (context.HttpContext.GetSessionData() == null) throw new AuthenticationException();
-    }
-    */
+    //
+    // public override void OnActionExecuting(ActionExecutingContext context)
+    // {
+    //     if (context.HttpContext.GetSessionData() == null) throw new AuthenticationException();
+    // }
+    //
 }
